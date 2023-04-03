@@ -1,0 +1,31 @@
+{
+	"name": "proyecto-nodejs-ecommerce",
+	"version": "1.0.0",
+	"description": "proyecto nodejs curso backend coderhouse",
+	"type": "module",
+	"main": "src/app.js",
+	"scripts": {
+		"start": "node src/app.js",
+		"dev": "nodemon src/app.js",
+		"watch": "node --watch src/app.js"
+	},
+	"keywords": [
+		"backend, nodejs",
+		"express"
+	],
+	"author": "Martin Ferreira Yic",
+	"license": "ISC",
+	"dependencies": {
+		"bcryptjs": "2.4.3",
+		"cors": "2.8.5",
+		"dotenv": "16.0.3",
+		"express": "4.18.2",
+		"express-validator": "6.15.0",
+		"google-auth-library": "8.7.0",
+		"jsonwebtoken": "9.0.0",
+		"mongoose": "7.0.3"
+	},
+	"devDependencies": {
+		"nodemon": "2.0.22"
+	}
+}
