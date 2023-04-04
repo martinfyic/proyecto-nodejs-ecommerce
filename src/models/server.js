@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { dbConnection } from '../database/config.js';
-import { authRouter } from '../routes/index.js';
+import { authRouter, productRouter } from '../routes/index.js';
 
 export class Server {
 	constructor() {
@@ -11,6 +11,7 @@ export class Server {
 		// Path
 		this.path = {
 			auth: '/api/auth',
+			products: '/api/products',
 		};
 
 		// DB connect
@@ -39,6 +40,7 @@ export class Server {
 
 	routes() {
 		this.app.use(this.path.auth, authRouter);
+		this.app.use(this.path.products, productRouter);
 	}
 
 	listen() {
