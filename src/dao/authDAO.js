@@ -12,7 +12,13 @@ export const findUserByEmail = async email => {
 };
 
 export const saveUserGoole = async newUser => {
-	const user = new User(newUser);
-	await user.save();
-	return user;
+	try {
+		const user = new User(newUser);
+		await user.save();
+		return user;
+	} catch (error) {
+		console.log(
+			`===> ⚠️ Error en saveUserGoole-authDAO - ⌚ - ${new Date().toLocaleString()} ==> ${error}`
+		);
+	}
 };
