@@ -1,1 +1,2 @@
-export { authRouter } from '../routes/authRoutes.js';
+export { authRouter } from './authRoutes.js';
+export { productRouter } from './productRoutes.js';
