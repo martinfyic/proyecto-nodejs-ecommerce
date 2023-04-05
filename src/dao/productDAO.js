@@ -23,3 +23,14 @@ export const getProductById = async id => {
 
 	return product;
 };
+
+export const getProductByName = async name => {
+	const product = await Product.findOne({ name });
+	return product;
+};
+
+export const postProduct = async product => {
+	const newProduct = new Product(product);
+	await newProduct.save();
+	return newProduct;
+};
