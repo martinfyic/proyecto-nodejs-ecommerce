@@ -1,7 +1,4 @@
-import { response, request } from 'express';
 import { authService } from '../service/index.js';
-import { User } from '../models/index.js';
-import { createJWT } from '../helpers/index.js';
 
 export const login = async (req, res) => {
 	const { email, password } = req.body;
@@ -44,7 +41,7 @@ export const login = async (req, res) => {
 	}
 };
 
-export const googleSingIn = async (req = request, res = response) => {
+export const googleSingIn = async (req, res) => {
 	const { id_token } = req.body;
 
 	try {
