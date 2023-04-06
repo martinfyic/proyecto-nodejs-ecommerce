@@ -2,7 +2,7 @@ import { User } from '../models/index.js';
 
 export const findUserByEmail = async email => {
 	try {
-		const user = await User.findOne({ email }).exec();
+		const user = await User.findOne({ email }).lean().exec();
 		return user;
 	} catch (error) {
 		console.log(
