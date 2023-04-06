@@ -2,7 +2,7 @@ import { productService } from '../service/index.js';
 import { productDTO } from '../dto/index.js';
 
 export const getProducts = async (req, res) => {
-	const { limit = 5, since = 0 } = req.query;
+	const { limit = 10, since = 0 } = req.query;
 
 	const [products, totalProducts] = await productService.getAllProducts(
 		limit,
