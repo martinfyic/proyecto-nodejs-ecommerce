@@ -8,7 +8,9 @@ export const getAllProducts = async (limit, since) => {
 			.populate('user', 'name')
 			.populate('category', 'name')
 			.limit(Number(limit))
-			.skip(Number(since)),
+			.skip(Number(since))
+			.lean()
+			.exec(),
 		Product.countDocuments(activProduct),
 	]);
 
@@ -19,13 +21,14 @@ export const getProductById = async id => {
 	const product = await Product.findById(id)
 		.populate('user', ['name', 'state'])
 		.populate('category', 'name')
+		.lean()
 		.exec();
 
 	return product;
 };
 
 export const getProductByName = async name => {
-	const product = await Product.findOne({ name });
+	const product = await Product.findOne({ name }).lean().exec();
 	return product;
 };
 
