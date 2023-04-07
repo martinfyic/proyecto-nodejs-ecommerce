@@ -42,12 +42,45 @@ export const postCategory = async (req, res) => {
 	}
 
 	const newCategory = categoryDTO(name, req.user._id);
-	const category = await categoryService.postCategory(newCategory);
+	const categoryCreated = await categoryService.postCategory(newCategory);
 
 	return res.status(201).json({
 		status: 'Ok',
 		message: 'Categotia creada correctamente',
 		method: req.method,
-		category,
+		categoryCreated,
+	});
+};
+
+export const updateCategory = async (req, res) => {
+	const { id } = req.params;
+	const { state, user, ...body } = req.body;
+	console.log(req.user);
+
+	if (body.name) {
+		body.name = body.name.toUpperCase();
+	}
+	body.user = req.user._id;
+
+	const categoryUpdated = await categoryService.updateCategory(id, body);
+
+	return res.status(200).json({
+		status: 'Ok',
+		message: 'Categotia actualizada correctamente',
+		method: req.method,
+		categoryUpdated,
+	});
+};
+
+export const deletedCategory = async (req, res) => {
+	const { id } = req.params;
+
+	const categoryDeleted = await categoryService.deletedCategory(id);
+
+	return res.status(200).json({
+		status: 'Ok',
+		message: 'Categotia eliminada correctamente',
+		method: req.method,
+		categoryDeleted,
 	});
 };
