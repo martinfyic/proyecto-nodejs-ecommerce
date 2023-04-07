@@ -21,13 +21,13 @@ const ProductSchema = Schema({
 
 	precio: {
 		type: Number,
-		default: 0,
+		required: [true, 'El precio es obligatorio'],
 	},
 
 	category: {
 		type: Schema.Types.ObjectId,
 		ref: 'Categories',
-		required: true,
+		required: [true, 'La categoria es obligatoria'],
 	},
 
 	description: { type: String },
@@ -38,6 +38,11 @@ const ProductSchema = Schema({
 	},
 
 	img: { type: String },
+
+	stock: {
+		type: Number,
+		required: true,
+	},
 });
 
 ProductSchema.methods.toJSON = function () {
