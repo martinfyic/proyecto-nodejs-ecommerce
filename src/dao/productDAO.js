@@ -37,3 +37,19 @@ export const postProduct = async product => {
 	await newProduct.save();
 	return newProduct;
 };
+
+export const updateProduct = async (id, body) => {
+	const productUpdated = await Product.findByIdAndUpdate(id, body, {
+		new: true,
+	});
+	return productUpdated;
+};
+
+export const deleteProduct = async id => {
+	const productDeleted = await Product.findByIdAndUpdate(
+		id,
+		{ state: false },
+		{ new: true }
+	);
+	return productDeleted;
+};
