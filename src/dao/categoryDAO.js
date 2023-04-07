@@ -28,3 +28,19 @@ export const postCategory = async name => {
 	await newCategory.save();
 	return newCategory;
 };
+
+export const updateCategory = async (id, body) => {
+	const categoryUpdated = await Category.findByIdAndUpdate(id, body, {
+		new: true,
+	});
+	return categoryUpdated;
+};
+
+export const deletedCategory = async id => {
+	const categoryDeleted = await Category.findByIdAndUpdate(
+		id,
+		{ state: false },
+		{ new: true }
+	);
+	return categoryDeleted;
+};
