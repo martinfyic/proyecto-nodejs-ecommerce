@@ -1,4 +1,4 @@
-export const productDTO = (name, user, ...body) => {
+export const productDTO = (name, user, body) => {
 	const newProduct = {
 		...body,
 		name,
