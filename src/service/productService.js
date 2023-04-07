@@ -43,3 +43,25 @@ export const postProduct = async product => {
 		);
 	}
 };
+
+export const updateProduct = async (id, body) => {
+	try {
+		const productUpdated = await productDAO.updateProduct(id, body);
+		return productUpdated;
+	} catch (error) {
+		console.log(
+			`===> ⚠️ Error en updateProduct-productService - ⌚ - ${new Date().toLocaleString()} ==> ${error}`
+		);
+	}
+};
+
+export const deleteProduct = async id => {
+	try {
+		const productDeleted = await productDAO.deleteProduct(id);
+		return productDeleted;
+	} catch (error) {
+		console.log(
+			`===> ⚠️ Error en updateProduct-productService - ⌚ - ${new Date().toLocaleString()} ==> ${error}`
+		);
+	}
+};
