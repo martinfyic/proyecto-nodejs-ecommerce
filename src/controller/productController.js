@@ -43,14 +43,47 @@ export const postProduct = async (req, res) => {
 		});
 	}
 
-	const newProduct = productDTO(name, req.user._id, ...body);
+	const newProduct = productDTO(name, req.user._id, body);
 
-	const product = await productService.postProduct(newProduct);
+	const productCreated = await productService.postProduct(newProduct);
 
 	return res.status(201).json({
 		status: 'Ok',
 		message: 'Producto creado correctamente',
 		method: req.method,
-		product,
+		productCreated,
+	});
+};
+
+export const updateProduct = async (req, res) => {
+	const { id } = req.params;
+	const { state, user, ...body } = req.body;
+
+	if (body.name) {
+		body.name = body.name.toUpperCase();
+	}
+	body.user = req.user._id;
+
+	console.log(body);
+	const productUpdated = await productService.updateProduct(id, body);
+
+	return res.status(200).json({
+		status: 'Ok',
+		message: 'Producto actualizado correctamente',
+		method: req.method,
+		productUpdated,
+	});
+};
+
+export const deleteProduct = async (req, res) => {
+	const { id } = req.params;
+
+	const productDeleted = await productService.deleteProduct(id);
+
+	return res.status(200).json({
+		status: 'Ok',
+		message: `Producto ${id} borrado correctamente`,
+		method: req.method,
+		productDeleted,
 	});
 };
