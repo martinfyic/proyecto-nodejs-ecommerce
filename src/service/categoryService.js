@@ -19,3 +19,13 @@ export const postCategory = async name => {
 	const newCategory = await categoryDAO.postCategory(name);
 	return newCategory;
 };
+
+export const updateCategory = async (id, body) => {
+	const categoryUpdated = await categoryDAO.updateCategory(id, body);
+	return categoryUpdated;
+};
+
+export const deletedCategory = async id => {
+	const categoryDeleted = await categoryDAO.deletedCategory(id);
+	return categoryDeleted;
+};
