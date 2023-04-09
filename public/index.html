@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Signin | Google</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+			crossorigin="anonymous"
+		/>
+	</head>
+	<body class="container">
+		<div class="row mt-5">
+			<div class="col-sm-6 p-3">
+				<h1>Google Signin</h1>
+				<hr />
+				<div
+					id="g_id_onload"
+					data-client_id="600199556623-a7en2qf8trmdjt2g7dholksehstolls4.apps.googleusercontent.com"
+					data-auto_prompt="false"
+					data-callback="handleCredentialResponse"
+				></div>
+				<div
+					class="g_id_signin"
+					data-type="standard"
+					data-size="large"
+					data-theme="outline"
+					data-text="sign_in_with"
+					data-shape="rectangular"
+					data-logo_alignment="left"
+				></div>
+				<button
+					class="btn btn-outline-dark mt-3 px-5"
+					id="google_singout"
+				>
+					Signout
+				</button>
+			</div>
+			<div class="col-sm-6 p-3">
+				<h1>Custom Signin</h1>
+				<hr />
+				<form
+					action=""
+					class="d-grid"
+				>
+					<input
+						id="emailInput"
+						type="text"
+						name="email"
+						class="form-control mb-2"
+						placeholder="Email"
+					/>
+					<input
+						id="passwordInput"
+						type="text"
+						name="password"
+						class="form-control mb-2"
+						placeholder="Password"
+					/>
+					<button
+						type="submit"
+						class="btn btn-dark mt-3 px-5"
+					>
+						Signin
+					</button>
+				</form>
+			</div>
+		</div>
+
+		<script
+			src="https://accounts.google.com/gsi/client"
+			async
+			defer
+		></script>
+		<script src="./js/auth.js"></script>
+	</body>
+</html>
