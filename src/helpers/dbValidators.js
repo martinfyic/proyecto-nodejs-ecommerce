@@ -1,4 +1,4 @@
-import { Category, Product, Role, User } from '../models/index.js';
+import { Cart, Category, Product, Role, User } from '../models/index.js';
 
 export const productByIdExist = async (id = '') => {
 	const productById = await Product.findById(id);
@@ -35,6 +35,14 @@ export const emailExist = async (email = '') => {
 	const existEmail = await User.findOne({ email });
 	if (existEmail) {
 		throw new Error(`El email: ${email} ya esta registrado`);
+	}
+	return true;
+};
+
+export const cartByIdExist = async (id = '') => {
+	const cartById = await Cart.findById(id);
+	if (!cartById) {
+		throw new Error(`El ID: ${id} no existe`);
 	}
 	return true;
 };
