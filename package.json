@@ -10,7 +10,8 @@
 		"watch": "node --watch src/app.js"
 	},
 	"keywords": [
-		"backend, nodejs",
+		"backend",
+		"nodejs",
 		"express"
 	],
 	"author": "Martin Ferreira Yic",
