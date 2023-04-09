@@ -3,6 +3,7 @@ import cors from 'cors';
 import { dbConnection } from '../database/config.js';
 import {
 	authRouter,
+	cartRouter,
 	categoryRouter,
 	productRouter,
 	searchRouter,
@@ -17,6 +18,7 @@ export class Server {
 		// Path
 		this.path = {
 			auth: '/api/auth',
+			carts: '/api/carts',
 			categories: '/api/categories',
 			products: '/api/products',
 			search: '/api/search',
@@ -49,6 +51,7 @@ export class Server {
 
 	routes() {
 		this.app.use(this.path.auth, authRouter);
+		this.app.use(this.path.carts, cartRouter);
 		this.app.use(this.path.categories, categoryRouter);
 		this.app.use(this.path.products, productRouter);
 		this.app.use(this.path.search, searchRouter);
