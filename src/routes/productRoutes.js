@@ -30,7 +30,7 @@ productRouter.post(
 		check('name', 'El nombre es obligatorio').not().isEmpty(),
 		check('category', 'No es un ID de mongo').isMongoId(),
 		check('category').custom(categoryByIdExist),
-		check('precio', 'El precio es obligatorio y numerico')
+		check('price', 'El precio es obligatorio y numerico')
 			.not()
 			.isEmpty()
 			.isNumeric(),
