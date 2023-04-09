@@ -1,3 +1,4 @@
+export { Cart } from './cart.js';
 export { Category } from './category.js';
 export { Product } from './product.js';
 export { Role } from './role.js';
