@@ -55,7 +55,6 @@ export const postCategory = async (req, res) => {
 export const updateCategory = async (req, res) => {
 	const { id } = req.params;
 	const { state, user, ...body } = req.body;
-	console.log(req.user);
 
 	if (body.name) {
 		body.name = body.name.toUpperCase();
