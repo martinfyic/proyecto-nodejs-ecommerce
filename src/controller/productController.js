@@ -64,7 +64,6 @@ export const updateProduct = async (req, res) => {
 	}
 	body.user = req.user._id;
 
-	console.log(body);
 	const productUpdated = await productService.updateProduct(id, body);
 
 	return res.status(200).json({
