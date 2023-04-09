@@ -26,7 +26,7 @@ export const postUser = async (req, res) => {
 	const body = req.body;
 	const user = await userService.postUser(body);
 
-	res.json({
+	res.status(201).json({
 		message: 'Usuario creado correctamente',
 		user,
 	});
@@ -38,7 +38,7 @@ export const putUser = async (req, res) => {
 
 	const user = await userService.putUser(id, body);
 
-	res.json({
+	res.status(200).json({
 		message: 'Usuario actualizado correctamente',
 		user,
 	});
@@ -49,7 +49,7 @@ export const deleteUser = async (req, res) => {
 
 	const user = await userService.deleteUser(id);
 
-	return res.json({
+	return res.status(200).json({
 		message: 'Usuario desactivado de la DB',
 		user,
 	});
