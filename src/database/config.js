@@ -10,7 +10,8 @@ export const dbConnection = async () => {
 				)
 			);
 	} catch (error) {
-		console.log(error);
-		throw new Error(`Error al iniciar la base de datos: ${error?.message}}`);
+		throw new Error(
+			`===> ⚠️ Error al iniciar la base de datos: ${error?.message}} ⚠️`
+		);
 	}
 };
