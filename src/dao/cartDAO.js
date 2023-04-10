@@ -47,20 +47,6 @@ export const addProductToCart = async (id, productAdded) => {
 	const { user, state, ...productSelected } = productAdded;
 	const cart = await Cart.findById(id).lean().exec();
 
-	if (!cart.products) {
-		const added = [
-			{
-				...productSelected,
-				quantity: 1,
-				total: productSelected.price,
-				stock: productSelected.stock - 1,
-			},
-		];
-		cart.products = added;
-		await Cart.findByIdAndUpdate(id, cart, { new: true });
-		return cart;
-	}
-
 	const existProduct = cart.products.find(
 		product => product._id.toString() === productSelected._id.toString()
 	);
@@ -69,6 +55,54 @@ export const addProductToCart = async (id, productAdded) => {
 			if (prodInCart._id.toString() === productSelected._id.toString()) {
 				prodInCart.quantity += 1;
 				prodInCart.stock -= 1;
+				prodInCart.total = prodInCart.quantity * prodInCart.price;
+			}
+			return prodInCart;
+		});
+
+		cart.products = products;
+		await Cart.findByIdAndUpdate(id, cart, { new: true });
+		return cart;
+	} else {
+		let addProd = [
+			...cart.products,
+			{
+				...productSelected,
+				quantity: 1,
+				total: productSelected.price,
+				stock: productSelected.stock - 1,
+			},
+		];
+		cart.products = addProd;
+		await Cart.findByIdAndUpdate(id, cart, { new: true });
+		return cart;
+	}
+};
+
+export const deleteProductInCart = async (id, prodId) => {
+	const cart = await Cart.findById(id).lean().exec();
+
+	const existProduct = cart?.products.find(
+		prod => prod._id.toString() === prodId
+	);
+
+	if (existProduct === undefined)
+		return { message: `Producto ID: ${prodId} no existe en el carrito`, cart };
+
+	if (existProduct.quantity === 1) {
+		const products = cart.products.filter(
+			prodInCart => prodInCart._id.toString() !== prodId
+		);
+		cart.products = products;
+		await Cart.findByIdAndUpdate(id, cart, { new: true });
+		return cart;
+	}
+
+	if (existProduct) {
+		const products = cart.products.map(prodInCart => {
+			if (prodInCart._id.toString() === prodId) {
+				prodInCart.quantity -= 1;
+				prodInCart.stock += 1;
 				prodInCart.total = prodInCart.quantity * prodInCart.price;
 			}
 			return prodInCart;
