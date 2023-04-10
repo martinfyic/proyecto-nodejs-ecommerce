@@ -75,3 +75,25 @@ export const addProductToCart = async (req, res) => {
 		productAdded,
 	});
 };
+
+export const deleteProductInCart = async (req, res) => {
+	const { id, prodId } = req.params;
+
+	const productDeleted = await cartService.deleteProductInCart(id, prodId);
+
+	if (productDeleted.message) {
+		return res.status(400).json({
+			status: 'Bad request',
+			message: productDeleted.message,
+			method: req.method,
+			productDeleted: productDeleted.cart,
+		});
+	}
+
+	return res.status(200).json({
+		status: 'Ok',
+		message: `Producto ${id} eliminado correctamente`,
+		method: req.method,
+		productDeleted,
+	});
+};
