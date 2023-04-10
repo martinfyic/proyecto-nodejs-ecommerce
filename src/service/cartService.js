@@ -33,3 +33,8 @@ export const addProductToCart = async (id, prodId) => {
 	const cart = await cartDAO.addProductToCart(id, productAdded);
 	return cart;
 };
+
+export const deleteProductInCart = async (id, prodId) => {
+	const cart = await cartDAO.deleteProductInCart(id, prodId);
+	return cart;
+};
