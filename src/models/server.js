@@ -5,6 +5,7 @@ import {
 	authRouter,
 	cartRouter,
 	categoryRouter,
+	orderRouter,
 	productRouter,
 	searchRouter,
 	userRouter,
@@ -20,18 +21,16 @@ export class Server {
 			auth: '/api/auth',
 			carts: '/api/carts',
 			categories: '/api/categories',
+			orders: '/api/orders',
 			products: '/api/products',
 			search: '/api/search',
 			user: '/api/users',
 		};
 
-		// DB connect
 		this.connectDB();
 
-		// Middlewares
 		this.middlewares();
 
-		// Routes
 		this.routes();
 	}
 
@@ -53,6 +52,7 @@ export class Server {
 		this.app.use(this.path.auth, authRouter);
 		this.app.use(this.path.carts, cartRouter);
 		this.app.use(this.path.categories, categoryRouter);
+		this.app.use(this.path.orders, orderRouter);
 		this.app.use(this.path.products, productRouter);
 		this.app.use(this.path.search, searchRouter);
 		this.app.use(this.path.user, userRouter);
