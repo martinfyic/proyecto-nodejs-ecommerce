@@ -4,7 +4,6 @@ const CartSchema = Schema(
 	{
 		products: {
 			type: Array,
-			ref: 'Products',
 			required: true,
 			default: [],
 		},
