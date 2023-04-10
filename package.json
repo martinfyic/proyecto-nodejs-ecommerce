@@ -25,6 +25,7 @@
 		"google-auth-library": "8.7.0",
 		"jsonwebtoken": "9.0.0",
 		"mongoose": "7.0.3",
+		"nodemailer": "6.9.1",
 		"uuid": "9.0.0"
 	},
 	"devDependencies": {
