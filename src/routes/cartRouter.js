@@ -43,3 +43,15 @@ cartRouter.post(
 	],
 	cartController.addProductToCart
 );
+
+cartRouter.delete(
+	'/:id/products/:prodId',
+	[
+		jwtValidator,
+		check('id', 'El cartID no es valido').isMongoId(),
+		check('id').custom(cartByIdExist),
+		check('prodId', 'El prodID no es valido').isMongoId(),
+		fieldValidator,
+	],
+	cartController.deleteProductInCart
+);
