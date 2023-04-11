@@ -1,13 +1,12 @@
 import { User } from '../models/index.js';
+import { logger } from '../config/winston/winston.js';
 
 export const findUserByEmail = async email => {
 	try {
 		const user = await User.findOne({ email }).lean().exec();
 		return user;
 	} catch (error) {
-		console.log(
-			`===> ⚠️ Error en findUserByEmail-authDAO - ⌚ - ${new Date().toLocaleString()} ==> ${error}`
-		);
+		logger.error(`===> ⚠️ Error en authDAO/findUserByEmail: ${error}`);
 	}
 };
 
@@ -17,8 +16,6 @@ export const saveUserGoole = async newUser => {
 		await user.save();
 		return user;
 	} catch (error) {
-		console.log(
-			`===> ⚠️ Error en saveUserGoole-authDAO - ⌚ - ${new Date().toLocaleString()} ==> ${error}`
-		);
+		logger.error(`===> ⚠️ Error en authDAO/saveUserGoole: ${error}`);
 	}
 };
