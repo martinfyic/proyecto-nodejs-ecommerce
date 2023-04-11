@@ -3,8 +3,23 @@ import { Schema, model } from 'mongoose';
 const OrderSchema = Schema(
 	{
 		purchase: {
-			type: Schema.Types.ObjectId,
-			ref: 'Carts',
+			type: Array,
+			required: true,
+			default: [],
+		},
+
+		userId: {
+			type: String,
+			required: true,
+		},
+
+		userEmail: {
+			type: String,
+			required: true,
+		},
+
+		userName: {
+			type: String,
 			required: true,
 		},
 
