@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
 import { dbConnection } from '../database/config.js';
 import {
 	authRouter,
@@ -8,6 +9,7 @@ import {
 	orderRouter,
 	productRouter,
 	searchRouter,
+	uploadsRouter,
 	userRouter,
 } from '../routes/index.js';
 import { logger } from '../config/winston/winston.js';
@@ -17,7 +19,6 @@ export class Server {
 		this.app = express();
 		this.PORT = process.env.PORT || 8080;
 
-		// Path
 		this.path = {
 			auth: '/api/auth',
 			carts: '/api/carts',
@@ -25,6 +26,7 @@ export class Server {
 			orders: '/api/orders',
 			products: '/api/products',
 			search: '/api/search',
+			uploads: '/api/uploads',
 			user: '/api/users',
 		};
 
@@ -40,13 +42,17 @@ export class Server {
 	}
 
 	middlewares() {
-		// cors
 		this.app.use(cors());
-		// Lectura y parseo
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }));
-		// Dir publico
 		this.app.use(express.static('public'));
+		this.app.use(
+			fileUpload({
+				useTempFiles: true,
+				tempFileDir: '/tmp/',
+				createParentPath: true,
+			})
+		);
 	}
 
 	routes() {
@@ -56,6 +62,7 @@ export class Server {
 		this.app.use(this.path.orders, orderRouter);
 		this.app.use(this.path.products, productRouter);
 		this.app.use(this.path.search, searchRouter);
+		this.app.use(this.path.uploads, uploadsRouter);
 		this.app.use(this.path.user, userRouter);
 	}
 
