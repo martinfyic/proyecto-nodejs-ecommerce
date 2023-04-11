@@ -46,3 +46,13 @@ export const cartByIdExist = async (id = '') => {
 	}
 	return true;
 };
+
+export const validCollection = (collection = '', collections = []) => {
+	const isValidCollection = collections.includes(collection);
+	if (!isValidCollection) {
+		throw new error(
+			`La coleccion ${collection} no es permitida, permitidas ${collections}`
+		);
+	}
+	return true;
+};
