@@ -15,12 +15,17 @@ const UserSchema = Schema(
 			type: String,
 			required: [true, 'La contraseña es obligatorio'],
 		},
+		address: {
+			type: String,
+			default: null,
+		},
 		img: {
 			type: String,
+			default: null,
 		},
 		role: {
 			type: String,
-			required: true,
+			default: 'USER_ROLE',
 		},
 		state: {
 			type: Boolean,
