@@ -1,4 +1,6 @@
 import { authService } from '../service/index.js';
+import { createJWT } from '../helpers/index.js';
+import { logger } from '../config/winston/winston.js';
 
 export const login = async (req, res) => {
 	const { email, password } = req.body;
@@ -32,9 +34,7 @@ export const login = async (req, res) => {
 			token,
 		});
 	} catch (error) {
-		console.log(
-			`===> ⚠️ Error en login-authController - ⌚ - ${new Date().toLocaleString()} ==> ${error}`
-		);
+		logger.error(`===> ⚠️ Error in authController/login: ${error}`);
 		return res.status(500).json({
 			message: 'Algo salio mal, hable con el administrador',
 		});
@@ -67,9 +67,23 @@ export const googleSingIn = async (req, res) => {
 			token,
 		});
 	} catch (error) {
-		console.log(
-			`===> ⚠️ Error en googleSingIn-authController - ⌚ - ${new Date().toLocaleString()} ==> ${error}`
-		);
+		logger.error(`===> ⚠️ Error in authController/googleSingIn: ${error}`);
+		return res.status(400).json({
+			message: 'El Token no se pudo verificar',
+		});
+	}
+};
+
+export const renewToken = async (req, res) => {
+	try {
+		const user = req.user;
+		const token = await createJWT(user._id);
+		res.json({
+			user,
+			token,
+		});
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in authController/renewToken: ${error}`);
 		return res.status(400).json({
 			message: 'El Token no se pudo verificar',
 		});
