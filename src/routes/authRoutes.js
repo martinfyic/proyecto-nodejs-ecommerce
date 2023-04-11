@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { fieldValidator } from '../middlewares/index.js';
+import { fieldValidator, jwtValidator } from '../middlewares/index.js';
 import * as authController from '../controller/authController.js';
 
 export const authRouter = Router();
@@ -23,3 +23,5 @@ authRouter.post(
 	],
 	authController.googleSingIn
 );
+
+authRouter.get('/', jwtValidator, authController.renewToken);
