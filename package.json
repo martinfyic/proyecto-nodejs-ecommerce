@@ -26,7 +26,8 @@
 		"jsonwebtoken": "9.0.0",
 		"mongoose": "7.0.3",
 		"nodemailer": "6.9.1",
-		"uuid": "9.0.0"
+		"uuid": "9.0.0",
+		"winston": "3.8.2"
 	},
 	"devDependencies": {
 		"nodemon": "2.0.22"
