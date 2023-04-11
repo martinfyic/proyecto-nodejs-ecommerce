@@ -40,7 +40,6 @@ userRouter.post(
 		check('password', 'El password deben de ser 8 o mas caracteres ').isLength({
 			min: 8,
 		}),
-		check('role').custom(isValidRole),
 		fieldValidator,
 	],
 	userControllers.postUser
