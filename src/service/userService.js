@@ -1,6 +1,10 @@
 import bcrypt from 'bcryptjs';
 import { userDAO } from '../dao/index.js';
 import { userDTO } from '../dto/index.js';
+import {
+	singupEmailAdmin,
+	singupEmailUser,
+} from '../config/nodemailer/template/singupEmail.js';
 
 export const getUsers = async (limit, since) => {
 	const allUsers = await userDAO.getUsers(limit, since);
@@ -19,6 +23,9 @@ export const postUser = async body => {
 	user.password = bcrypt.hashSync(body.password, salt);
 
 	const newUser = await userDAO.postUser(user);
+
+	await singupEmailAdmin(newUser);
+	await singupEmailUser(newUser);
 	return newUser;
 };
 
