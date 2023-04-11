@@ -1,9 +1,8 @@
-export const userDTO = ({ name, email, password, role }) => {
+export const userDTO = ({ name, email, password }) => {
 	const newUser = {
 		name,
 		email,
 		password,
-		role,
 	};
 
 	return newUser;
