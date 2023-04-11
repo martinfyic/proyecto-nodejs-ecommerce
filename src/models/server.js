@@ -10,6 +10,7 @@ import {
 	searchRouter,
 	userRouter,
 } from '../routes/index.js';
+import { logger } from '../config/winston/winston.js';
 
 export class Server {
 	constructor() {
@@ -61,14 +62,12 @@ export class Server {
 	listen() {
 		this.app
 			.listen(this.PORT, () => {
-				console.log(
-					`===> 🚀 Servidor en http://localhost:${
-						this.PORT
-					} - ⌚ - ${new Date().toLocaleString()} 🚀`
+				logger.info(
+					`===> 🚀 Server listening on http://localhost:${this.PORT} 🚀`
 				);
 			})
 			.on('error', err => {
-				console.log(`===> ⚠️ Error en servidor: ${err?.message}`);
+				logger.error(`===> ⚠️ Server error: ${err?.message}`);
 			});
 	}
 }
