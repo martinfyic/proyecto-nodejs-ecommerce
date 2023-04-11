@@ -23,6 +23,12 @@ export const createOrder = async (idCart, user) => {
 			};
 		} else {
 			const orderFormat = orderDTO(cartOrder, user);
+			if (orderFormat.userAddress === null) {
+				return {
+					message: `El usuario ${orderFormat.userName} no tiene direcciones registradas`,
+					address: orderFormat.userAddress,
+				};
+			}
 			const newOrder = await orderDAO.createOrder(orderFormat);
 			await orderEmail(newOrder);
 			return newOrder;
