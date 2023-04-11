@@ -23,6 +23,11 @@ const OrderSchema = Schema(
 			required: true,
 		},
 
+		userAddress: {
+			type: String,
+			required: true,
+		},
+
 		state: {
 			type: Boolean,
 			default: true,
