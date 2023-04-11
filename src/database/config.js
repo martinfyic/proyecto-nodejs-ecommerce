@@ -1,17 +1,12 @@
 import mongoose from 'mongoose';
+import { logger } from '../config/winston/winston.js';
 
 export const dbConnection = async () => {
 	try {
 		await mongoose
 			.connect(process.env.MONGODB_URL)
-			.then(
-				console.log(
-					`===> ✨ Conección a DB💽 exitosa - ⌚ - ${new Date().toLocaleString()} ✨ `
-				)
-			);
+			.then(logger.info(`===> ✨ Successful connection to DB ✨ `));
 	} catch (error) {
-		throw new Error(
-			`===> ⚠️ Error al iniciar la base de datos: ${error?.message}} ⚠️`
-		);
+		logger.error(`===> ⚠️ Error connecting to database: ${error?.message}} ⚠️`);
 	}
 };
