@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { logger } from '../config/winston/winston.js';
 
 export const createJWT = (uid = '') => {
 	return new Promise((resolve, reject) => {
@@ -12,7 +13,7 @@ export const createJWT = (uid = '') => {
 			},
 			(error, token) => {
 				if (error) {
-					console.log(`⚠️ ==> ${error}`);
+					logger.error(`⚠️ ==> ${error}`);
 					reject('No se pudo generar el token');
 				} else {
 					resolve(token);
