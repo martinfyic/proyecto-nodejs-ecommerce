@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { User } from '../models/index.js';
+import { logger } from '../config/winston/winston.js';
 
 export const jwtValidator = async (req, res, next) => {
 	const token = req.header('auth-token');
@@ -30,7 +31,7 @@ export const jwtValidator = async (req, res, next) => {
 		req.user = user;
 		next();
 	} catch (error) {
-		console.log(`⚠️ ==> ${error}`);
+		logger.warn(`⚠️ ==> ${error}`);
 		return res.status(401).json({
 			message: 'Token no valido',
 		});
