@@ -63,12 +63,13 @@ const listUsers = (users = []) => {
 
 const listMess = (messages = []) => {
 	let messHtml = '';
-	messages.forEach(({ name, mess }) => {
+	messages.forEach(({ name, mess, messDate }) => {
 		messHtml += `
 			<li>
 				<p>
-					<span class="text-primary fw-bolder">${name}: </span>
-					<span">${mess}</span>
+					<span class="text-primary fw-bold">${name}: </span>
+					<span class="fw-semibold">${mess} </span>
+					<span class="fst-italic text-body-secondary"> [${messDate}]</span>
 				</p>
 			</li>
 		`;
