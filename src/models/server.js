@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import { Server } from 'socket.io';
 import fileUpload from 'express-fileupload';
+import { createServer } from 'node:http';
 import { dbConnection } from '../database/config.js';
 import {
 	authRouter,
@@ -12,12 +14,15 @@ import {
 	uploadsRouter,
 	userRouter,
 } from '../routes/index.js';
+import { socketController } from '../sockets/socketsController.js';
 import { logger } from '../config/winston/winston.js';
 
-export class Server {
+export class ServerApp {
 	constructor() {
 		this.app = express();
 		this.PORT = process.env.PORT || 8080;
+		this.server = createServer(this.app);
+		this.io = new Server(this.server);
 
 		this.path = {
 			auth: '/api/auth',
@@ -35,6 +40,8 @@ export class Server {
 		this.middlewares();
 
 		this.routes();
+
+		this.socket();
 	}
 
 	async connectDB() {
@@ -66,8 +73,12 @@ export class Server {
 		this.app.use(this.path.user, userRouter);
 	}
 
+	socket() {
+		this.io.on('connection', socket => socketController(socket, this.io));
+	}
+
 	listen() {
-		this.app
+		this.server
 			.listen(this.PORT, () => {
 				logger.info(
 					`===> 🚀 Server listening on http://localhost:${this.PORT} 🚀`
