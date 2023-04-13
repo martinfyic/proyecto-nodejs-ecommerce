@@ -80,9 +80,7 @@ export class ServerApp {
 	listen() {
 		this.server
 			.listen(this.PORT, () => {
-				logger.info(
-					`===> 🚀 Server listening on http://localhost:${this.PORT} 🚀`
-				);
+				logger.info(`===> 🚀 Server listening on port: ${this.PORT} 🚀`);
 			})
 			.on('error', err => {
 				logger.error(`===> ⚠️ Server error: ${err?.message}`);
