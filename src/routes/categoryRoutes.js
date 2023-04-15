@@ -7,53 +7,84 @@ import {
 } from '../middlewares/index.js';
 import { categoryByIdExist } from '../helpers/index.js';
 import * as categoryController from '../controller/categoryController.js';
+import { logger } from '../config/winston/winston.js';
 
 export const categoryRouter = Router();
 
-categoryRouter.get('/', categoryController.getCategories);
+try {
+	categoryRouter.get('/', categoryController.getCategories);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in categoryRoutes/categoryRouter.get '/': ${error}`
+	);
+}
 
-categoryRouter.get(
-	'/:id',
-	[
-		check('id', 'El ID no es valido').isMongoId(),
-		check('id').custom(categoryByIdExist),
-		fieldValidator,
-	],
-	categoryController.getCategoryById
-);
+try {
+	categoryRouter.get(
+		'/:id',
+		[
+			check('id', 'El ID no es valido').isMongoId(),
+			check('id').custom(categoryByIdExist),
+			fieldValidator,
+		],
+		categoryController.getCategoryById
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in categoryRoutes/categoryRouter.get '/:id': ${error}`
+	);
+}
 
-categoryRouter.post(
-	'/',
-	[
-		jwtValidator,
-		isAdminRole,
-		check('name', 'El nombre es obligatorio').not().isEmpty(),
-		fieldValidator,
-	],
-	categoryController.postCategory
-);
+try {
+	categoryRouter.post(
+		'/',
+		[
+			jwtValidator,
+			isAdminRole,
+			check('name', 'El nombre es obligatorio').not().isEmpty(),
+			fieldValidator,
+		],
+		categoryController.postCategory
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in categoryRoutes/categoryRouter.post '/': ${error}`
+	);
+}
 
-categoryRouter.put(
-	'/:id',
-	[
-		jwtValidator,
-		isAdminRole,
-		check('name', 'El nombre es obligatorio').not().isEmpty(),
-		check('id', 'El ID no es valido').isMongoId(),
-		check('id').custom(categoryByIdExist),
-		fieldValidator,
-	],
-	categoryController.updateCategory
-);
+try {
+	categoryRouter.put(
+		'/:id',
+		[
+			jwtValidator,
+			isAdminRole,
+			check('name', 'El nombre es obligatorio').not().isEmpty(),
+			check('id', 'El ID no es valido').isMongoId(),
+			check('id').custom(categoryByIdExist),
+			fieldValidator,
+		],
+		categoryController.updateCategory
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in categoryRoutes/categoryRouter.put '/:id': ${error}`
+	);
+}
 
-categoryRouter.delete(
-	'/:id',
-	[
-		jwtValidator,
-		isAdminRole,
-		check('id', 'El ID no es valido').isMongoId(),
-		check('id').custom(categoryByIdExist),
-		fieldValidator,
-	],
-	categoryController.deletedCategory
-);
+try {
+	categoryRouter.delete(
+		'/:id',
+		[
+			jwtValidator,
+			isAdminRole,
+			check('id', 'El ID no es valido').isMongoId(),
+			check('id').custom(categoryByIdExist),
+			fieldValidator,
+		],
+		categoryController.deletedCategory
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in categoryRoutes/categoryRouter.delete '/:id': ${error}`
+	);
+}

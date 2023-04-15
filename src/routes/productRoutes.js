@@ -7,62 +7,93 @@ import {
 	jwtValidator,
 	isAdminRole,
 } from '../middlewares/index.js';
+import { logger } from '../config/winston/winston.js';
 
 export const productRouter = Router();
 
-productRouter.get('/', productController.getProducts);
+try {
+	productRouter.get('/', productController.getProducts);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in productRoutes/productRouter.get '/': ${error}`
+	);
+}
 
-productRouter.get(
-	'/:id',
-	[
-		check('id', 'El ID no es valido').isMongoId(),
-		check('id').custom(productByIdExist),
-		fieldValidator,
-	],
-	productController.getProductById
-);
+try {
+	productRouter.get(
+		'/:id',
+		[
+			check('id', 'El ID no es valido').isMongoId(),
+			check('id').custom(productByIdExist),
+			fieldValidator,
+		],
+		productController.getProductById
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in productRoutes/productRouter.get '/:id': ${error}`
+	);
+}
 
-productRouter.post(
-	'/',
-	[
-		jwtValidator,
-		isAdminRole,
-		check('name', 'El nombre es obligatorio').not().isEmpty(),
-		check('category', 'No es un ID de mongo').isMongoId(),
-		check('category').custom(categoryByIdExist),
-		check('price', 'El precio es obligatorio y numerico')
-			.not()
-			.isEmpty()
-			.isNumeric(),
-		check('stock', 'El stock es obligatorio y numerico')
-			.not()
-			.isEmpty()
-			.isNumeric(),
-		fieldValidator,
-	],
-	productController.postProduct
-);
+try {
+	productRouter.post(
+		'/',
+		[
+			jwtValidator,
+			isAdminRole,
+			check('name', 'El nombre es obligatorio').not().isEmpty(),
+			check('category', 'No es un ID de mongo').isMongoId(),
+			check('category').custom(categoryByIdExist),
+			check('price', 'El precio es obligatorio y numerico')
+				.not()
+				.isEmpty()
+				.isNumeric(),
+			check('stock', 'El stock es obligatorio y numerico')
+				.not()
+				.isEmpty()
+				.isNumeric(),
+			fieldValidator,
+		],
+		productController.postProduct
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in productRoutes/productRouter.post '/': ${error}`
+	);
+}
 
-productRouter.put(
-	'/:id',
-	[
-		jwtValidator,
-		isAdminRole,
-		check('id', 'El ID no es valido').isMongoId(),
-		check('id').custom(productByIdExist),
-		fieldValidator,
-	],
-	productController.updateProduct
-);
+try {
+	productRouter.put(
+		'/:id',
+		[
+			jwtValidator,
+			isAdminRole,
+			check('id', 'El ID no es valido').isMongoId(),
+			check('id').custom(productByIdExist),
+			fieldValidator,
+		],
+		productController.updateProduct
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in productRoutes/productRouter.put '/:id': ${error}`
+	);
+}
 
-productRouter.delete(
-	'/:id',
-	[
-		jwtValidator,
-		isAdminRole,
-		check('id', 'El ID no es valido').isMongoId(),
-		check('id').custom(productByIdExist),
-		fieldValidator,
-	],
-	productController.deleteProduct
-);
+try {
+	productRouter.delete(
+		'/:id',
+		[
+			jwtValidator,
+			isAdminRole,
+			check('id', 'El ID no es valido').isMongoId(),
+			check('id').custom(productByIdExist),
+			fieldValidator,
+		],
+		productController.deleteProduct
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in productRoutes/productRouter.delete '/:id': ${error}`
+	);
+}

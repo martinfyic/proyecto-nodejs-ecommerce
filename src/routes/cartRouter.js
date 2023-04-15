@@ -3,55 +3,86 @@ import { check } from 'express-validator';
 import * as cartController from '../controller/cartController.js';
 import { fieldValidator, jwtValidator } from '../middlewares/index.js';
 import { cartByIdExist, productByIdExist } from '../helpers/index.js';
+import { logger } from '../config/winston/winston.js';
 
 export const cartRouter = Router();
 
-cartRouter.get('/', cartController.getAllCarts);
+try {
+	cartRouter.get('/', cartController.getAllCarts);
+} catch (error) {
+	logger.error(`===> ⚠️ Error in cartRouter/cartRouter.get '/': ${error}`);
+}
 
-cartRouter.get(
-	'/:id',
-	[
-		check('id', 'El ID no es valido').isMongoId(),
-		check('id').custom(cartByIdExist),
-		fieldValidator,
-	],
-	cartController.getCart
-);
+try {
+	cartRouter.get(
+		'/:id',
+		[
+			check('id', 'El ID no es valido').isMongoId(),
+			check('id').custom(cartByIdExist),
+			fieldValidator,
+		],
+		cartController.getCart
+	);
+} catch (error) {
+	logger.error(`===> ⚠️ Error in cartRouter/cartRouter.get '/:id': ${error}`);
+}
 
-cartRouter.post('/', [jwtValidator, fieldValidator], cartController.postCart);
+try {
+	cartRouter.post('/', [jwtValidator, fieldValidator], cartController.postCart);
+} catch (error) {
+	logger.error(`===> ⚠️ Error in cartRouter/cartRouter.post '/': ${error}`);
+}
 
-cartRouter.delete(
-	'/:id',
-	[
-		jwtValidator,
-		check('id', 'El ID no es valido').isMongoId(),
-		check('id').custom(cartByIdExist),
-		fieldValidator,
-	],
-	cartController.deleteCart
-);
+try {
+	cartRouter.delete(
+		'/:id',
+		[
+			jwtValidator,
+			check('id', 'El ID no es valido').isMongoId(),
+			check('id').custom(cartByIdExist),
+			fieldValidator,
+		],
+		cartController.deleteCart
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in cartRouter/cartRouter.delete '/:id': ${error}`
+	);
+}
 
-cartRouter.post(
-	'/:id/products',
-	[
-		jwtValidator,
-		check('id', 'El cartID no es valido').isMongoId(),
-		check('id').custom(cartByIdExist),
-		check('prodId', 'El prodID no es valido').isMongoId(),
-		check('prodId').custom(productByIdExist),
-		fieldValidator,
-	],
-	cartController.addProductToCart
-);
+try {
+	cartRouter.post(
+		'/:id/products',
+		[
+			jwtValidator,
+			check('id', 'El cartID no es valido').isMongoId(),
+			check('id').custom(cartByIdExist),
+			check('prodId', 'El prodID no es valido').isMongoId(),
+			check('prodId').custom(productByIdExist),
+			fieldValidator,
+		],
+		cartController.addProductToCart
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in cartRouter/cartRouter.post '/:id/products': ${error}`
+	);
+}
 
-cartRouter.delete(
-	'/:id/products/:prodId',
-	[
-		jwtValidator,
-		check('id', 'El cartID no es valido').isMongoId(),
-		check('id').custom(cartByIdExist),
-		check('prodId', 'El prodID no es valido').isMongoId(),
-		fieldValidator,
-	],
-	cartController.deleteProductInCart
-);
+try {
+	cartRouter.delete(
+		'/:id/products/:prodId',
+		[
+			jwtValidator,
+			check('id', 'El cartID no es valido').isMongoId(),
+			check('id').custom(cartByIdExist),
+			check('prodId', 'El prodID no es valido').isMongoId(),
+			fieldValidator,
+		],
+		cartController.deleteProductInCart
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in cartRouter/cartRouter.delete '/:id/products/:prodId': ${error}`
+	);
+}

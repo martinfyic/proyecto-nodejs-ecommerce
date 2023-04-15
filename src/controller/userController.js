@@ -1,56 +1,93 @@
 import { userService } from '../service/index.js';
+import { logger } from '../config/winston/winston.js';
 
 export const getUsers = async (req, res) => {
-	const { limit = 10, since = 0 } = req.query;
+	try {
+		const { limit = 10, since = 0 } = req.query;
 
-	const [users, totalUsers] = await userService.getUsers(limit, since);
+		const [users, totalUsers] = await userService.getUsers(limit, since);
 
-	res.json({
-		message: 'Usuarios en DB',
-		totalUsers,
-		users,
-	});
+		res.json({
+			message: 'Usuarios en DB',
+			totalUsers,
+			users,
+		});
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userController/getUsers: ${error}`);
+	}
 };
 
 export const getUserById = async (req, res) => {
-	const { id } = req.params;
-	const user = await userService.getUserById(id);
+	try {
+		const { id } = req.params;
+		const user = await userService.getUserById(id);
 
-	res.json({
-		message: `Usuario ID: ${id} encontrado`,
-		user,
-	});
+		res.json({
+			message: `Usuario ID: ${id} encontrado`,
+			user,
+		});
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userController/getUserById: ${error}`);
+	}
 };
 
 export const postUser = async (req, res) => {
-	const body = req.body;
-	const user = await userService.postUser(body);
+	try {
+		const body = req.body;
+		const user = await userService.postUser(body);
 
-	res.status(201).json({
-		message: 'Usuario creado correctamente',
-		user,
-	});
+		res.status(201).json({
+			message: 'Usuario creado correctamente',
+			user,
+		});
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userController/postUser: ${error}`);
+	}
 };
 
 export const putUser = async (req, res) => {
-	const { id } = req.params;
-	const body = req.body;
+	try {
+		const { id } = req.params;
+		const body = req.body;
 
-	const user = await userService.putUser(id, body);
+		const user = await userService.putUser(id, body);
 
-	res.status(200).json({
-		message: 'Usuario actualizado correctamente',
-		user,
-	});
+		res.status(200).json({
+			message: 'Usuario actualizado correctamente',
+			user,
+		});
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userController/putUser: ${error}`);
+	}
 };
 
 export const deleteUser = async (req, res) => {
-	const { id } = req.params;
+	try {
+		const { id } = req.params;
 
-	const user = await userService.deleteUser(id);
+		const user = await userService.deleteUser(id);
 
-	return res.status(200).json({
-		message: 'Usuario desactivado de la DB',
-		user,
-	});
+		return res.status(200).json({
+			message: 'Usuario desactivado de la DB',
+			user,
+		});
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userController/deleteUser: ${error}`);
+	}
+};
+
+export const putUserRoleUpdate = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const role = req.body;
+
+		const roleUpdate = await userService.putUserRoleUpdate(id, role);
+
+		return res.status(200).json({
+			message: `Usuario actualizado con el role ${role}`,
+			roleUpdate,
+		});
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userController/putUserRoleUpdate: ${error}`);
+	}
 };

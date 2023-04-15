@@ -2,9 +2,9 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 import * as userControllers from '../controller/userController.js';
 import {
-	isValidRole,
 	emailExist,
 	userByIdExist,
+	isValidRole,
 } from '../helpers/dbValidators.js';
 import {
 	fieldValidator,
@@ -16,11 +16,7 @@ import { logger } from '../config/winston/winston.js';
 export const userRouter = Router();
 
 try {
-	userRouter.get(
-		'/',
-		check('role').custom(isValidRole),
-		userControllers.getUsers
-	);
+	userRouter.get('/', userControllers.getUsers);
 } catch (error) {
 	logger.error(`===> ⚠️ Error in userRoutes/userRouter.get '/': ${error}`);
 }
@@ -31,7 +27,6 @@ try {
 		[
 			check('id', 'El ID no es valido').isMongoId(),
 			check('id').custom(userByIdExist),
-			check('role').custom(isValidRole),
 			fieldValidator,
 		],
 		userControllers.getUserById
@@ -67,7 +62,6 @@ try {
 		[
 			check('id', 'El ID no es valido').isMongoId(),
 			check('id').custom(userByIdExist),
-			check('role').custom(isValidRole),
 			fieldValidator,
 		],
 		userControllers.putUser
@@ -91,5 +85,24 @@ try {
 } catch (error) {
 	logger.error(
 		`===> ⚠️ Error in userRoutes/userRouter.delete '/:id': ${error}`
+	);
+}
+
+try {
+	userRouter.put(
+		'/:id/roleupdate',
+		[
+			jwtValidator,
+			isAdminRole,
+			check('id', 'El ID no es valido').isMongoId(),
+			check('id').custom(userByIdExist),
+			check('role').custom(isValidRole),
+			fieldValidator,
+		],
+		userControllers.putUserRoleUpdate
+	);
+} catch (error) {
+	logger.error(
+		`===> ⚠️ Error in userRoutes/userRouter.put '/:id/roleupdate': ${error}`
 	);
 }
