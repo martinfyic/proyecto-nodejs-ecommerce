@@ -1,4 +1,5 @@
 import { Order } from '../models/index.js';
+import { logger } from '../config/winston/winston.js';
 
 export const getAllOrders = async (limit, since) => {
 	try {
