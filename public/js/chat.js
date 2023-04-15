@@ -1,4 +1,3 @@
-// const URL = 'http://localhost:8080/api/auth/';
 const URL = 'https://proyecto-nodejs-ecommerce.onrender.com/api/auth/';
 
 let user = null;

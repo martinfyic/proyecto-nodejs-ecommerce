@@ -7,6 +7,7 @@ export const jwtValidator = async (req, res, next) => {
 
 	if (!token) {
 		return res.status(401).json({
+			status: 'ERROR',
 			message: 'No hay token en la peticion',
 		});
 	}
@@ -18,12 +19,14 @@ export const jwtValidator = async (req, res, next) => {
 
 		if (!user) {
 			return res.status(401).json({
+				status: 'ERROR',
 				message: 'Token no valido',
 			});
 		}
 
 		if (!user.state) {
 			return res.status(401).json({
+				status: 'ERROR',
 				message: 'Token no valido',
 			});
 		}
@@ -33,6 +36,7 @@ export const jwtValidator = async (req, res, next) => {
 	} catch (error) {
 		logger.warn(`⚠️ ==> ${error}`);
 		return res.status(401).json({
+			status: 'ERROR',
 			message: 'Token no valido',
 		});
 	}

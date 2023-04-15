@@ -53,6 +53,8 @@ export class ServerApp {
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }));
 		this.app.use(express.static('public'));
+		this.app.set('view engine', 'ejs');
+		this.app.set('views', 'public');
 		this.app.use(
 			fileUpload({
 				useTempFiles: true,

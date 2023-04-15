@@ -1,6 +1,5 @@
 const customForm = document.querySelector('form');
 
-// const URL = `http://localhost:8080/api/auth/`;
 const URL = 'https://proyecto-nodejs-ecommerce.onrender.com/api/auth/';
 
 // Custom Auth
@@ -22,12 +21,12 @@ customForm.addEventListener('submit', event => {
 		body: JSON.stringify(formData),
 	})
 		.then(resp => resp.json())
-		.then(({ message, token }) => {
-			if (message) {
+		.then(({ message, token, status }) => {
+			if (status) {
 				return console.error(message);
 			}
 			localStorage.setItem('token', token);
-			window.location = 'chat.html';
+			window.location = 'api/products';
 		})
 		.catch(console.warn);
 
@@ -49,7 +48,7 @@ function handleCredentialResponse(response) {
 		.then(resp => resp.json())
 		.then(({ token }) => {
 			localStorage.setItem('token', token);
-			window.location = 'chat.html';
+			window.location = 'api/products';
 		})
 		.catch(console.warn);
 }
