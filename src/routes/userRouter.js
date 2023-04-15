@@ -16,11 +16,7 @@ import { logger } from '../config/winston/winston.js';
 export const userRouter = Router();
 
 try {
-	userRouter.get(
-		'/',
-		check('role').custom(isValidRole),
-		userControllers.getUsers
-	);
+	userRouter.get('/', userControllers.getUsers);
 } catch (error) {
 	logger.error(`===> ⚠️ Error in userRoutes/userRouter.get '/': ${error}`);
 }
@@ -31,7 +27,6 @@ try {
 		[
 			check('id', 'El ID no es valido').isMongoId(),
 			check('id').custom(userByIdExist),
-			check('role').custom(isValidRole),
 			fieldValidator,
 		],
 		userControllers.getUserById
