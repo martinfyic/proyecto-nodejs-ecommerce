@@ -1,55 +1,80 @@
 import { Product } from '../models/index.js';
+import { logger } from '../config/winston/winston.js';
 
 export const getAllProducts = async (limit, since) => {
-	const activProduct = { state: true };
+	try {
+		const activProduct = { state: true };
 
-	const [products, totalProducts] = await Promise.all([
-		Product.find(activProduct)
-			.populate('user', 'name')
-			.populate('category', 'name')
-			.limit(Number(limit))
-			.skip(Number(since))
-			.lean()
-			.exec(),
-		Product.countDocuments(activProduct),
-	]);
+		const [products, totalProducts] = await Promise.all([
+			Product.find(activProduct)
+				.populate('user', 'name')
+				.populate('category', 'name')
+				.limit(Number(limit))
+				.skip(Number(since))
+				.lean()
+				.exec(),
+			Product.countDocuments(activProduct),
+		]);
 
-	return [products, totalProducts];
+		return [products, totalProducts];
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in productDAO/getAllProducts: ${error}`);
+	}
 };
 
 export const getProductById = async id => {
-	const product = await Product.findById(id)
-		.populate('user', ['name', 'state'])
-		.populate('category', 'name')
-		.lean()
-		.exec();
+	try {
+		const product = await Product.findById(id)
+			.populate('user', ['name', 'state'])
+			.populate('category', 'name')
+			.lean()
+			.exec();
 
-	return product;
+		return product;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in productDAO/getProductById: ${error}`);
+	}
 };
 
 export const getProductByName = async name => {
-	const product = await Product.findOne({ name }).lean().exec();
-	return product;
+	try {
+		const product = await Product.findOne({ name }).lean().exec();
+		return product;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in productDAO/getProductByName: ${error}`);
+	}
 };
 
 export const postProduct = async product => {
-	const newProduct = new Product(product);
-	await newProduct.save();
-	return newProduct;
+	try {
+		const newProduct = new Product(product);
+		await newProduct.save();
+		return newProduct;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in productDAO/postProduct: ${error}`);
+	}
 };
 
 export const updateProduct = async (id, body) => {
-	const productUpdated = await Product.findByIdAndUpdate(id, body, {
-		new: true,
-	});
-	return productUpdated;
+	try {
+		const productUpdated = await Product.findByIdAndUpdate(id, body, {
+			new: true,
+		});
+		return productUpdated;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in productDAO/updateProduct: ${error}`);
+	}
 };
 
 export const deleteProduct = async id => {
-	const productDeleted = await Product.findByIdAndUpdate(
-		id,
-		{ state: false },
-		{ new: true }
-	);
-	return productDeleted;
+	try {
+		const productDeleted = await Product.findByIdAndUpdate(
+			id,
+			{ state: false },
+			{ new: true }
+		);
+		return productDeleted;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in productDAO/deleteProduct: ${error}`);
+	}
 };
