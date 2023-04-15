@@ -9,11 +9,17 @@ export const getProducts = async (req, res) => {
 		since
 	);
 
-	return res.json({
-		status: 'Ok',
-		message: 'Productos Activos',
-		method: req.method,
-		totalProducts,
+	// --- Para enviar json con la info de productos y consumir la api desde el front y no ejs ---
+	// return res.json({
+	// 	status: 'Ok',
+	// 	message: 'Productos Activos',
+	// 	method: req.method,
+	// 	totalProducts,
+	// 	products,
+	// });
+
+	res.render('views/products', {
+		title: 'Products 🤑 ',
 		products,
 	});
 };
