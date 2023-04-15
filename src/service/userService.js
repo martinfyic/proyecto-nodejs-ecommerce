@@ -5,43 +5,73 @@ import {
 	singupEmailAdmin,
 	singupEmailUser,
 } from '../config/nodemailer/template/singupEmail.js';
+import { logger } from '../config/winston/winston.js';
 
 export const getUsers = async (limit, since) => {
-	const allUsers = await userDAO.getUsers(limit, since);
-	return allUsers;
+	try {
+		const allUsers = await userDAO.getUsers(limit, since);
+		return allUsers;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userService/getUsers: ${error}`);
+	}
 };
 
 export const getUserById = async id => {
-	const userById = await userDAO.getUserById(id);
-	return userById;
+	try {
+		const userById = await userDAO.getUserById(id);
+		return userById;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userService/getUserById: ${error}`);
+	}
 };
 
 export const postUser = async body => {
-	let user = userDTO(body);
+	try {
+		let user = userDTO(body);
 
-	const salt = bcrypt.genSaltSync();
-	user.password = bcrypt.hashSync(body.password, salt);
+		const salt = bcrypt.genSaltSync();
+		user.password = bcrypt.hashSync(body.password, salt);
 
-	const newUser = await userDAO.postUser(user);
+		const newUser = await userDAO.postUser(user);
 
-	await singupEmailAdmin(newUser);
-	await singupEmailUser(newUser);
-	return newUser;
+		await singupEmailAdmin(newUser);
+		await singupEmailUser(newUser);
+		return newUser;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userService/postUser: ${error}`);
+	}
 };
 
 export const putUser = async (id, body) => {
-	const { _id, password, google, ...rest } = body;
+	try {
+		const { _id, password, google, role, ...rest } = body;
 
-	if (password) {
-		const salt = bcrypt.genSaltSync();
-		rest.password = bcrypt.hashSync(password, salt);
+		if (password) {
+			const salt = bcrypt.genSaltSync();
+			rest.password = bcrypt.hashSync(password, salt);
+		}
+
+		const user = await userDAO.putUser(id, rest);
+		return user;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userService/putUser: ${error}`);
 	}
-
-	const user = await userDAO.putUser(id, rest);
-	return user;
 };
 
 export const deleteUser = async id => {
-	const user = await userDAO.deleteUser(id);
-	return user;
+	try {
+		const user = await userDAO.deleteUser(id);
+		return user;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userService/deleteUser: ${error}`);
+	}
+};
+
+export const putUserRoleUpdate = async (id, role) => {
+	try {
+		const roleUpdate = await userDAO.putUserRoleUpdate(id, role);
+		return roleUpdate;
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in userService/putUserRoleUpdate: ${error}`);
+	}
 };
