@@ -8,6 +8,7 @@ import {
 	authRouter,
 	cartRouter,
 	categoryRouter,
+	errorRouter,
 	orderRouter,
 	productRouter,
 	searchRouter,
@@ -33,6 +34,7 @@ export class ServerApp {
 			search: '/api/search',
 			uploads: '/api/uploads',
 			user: '/api/users',
+			error: '*',
 		};
 
 		this.connectDB();
@@ -73,6 +75,7 @@ export class ServerApp {
 		this.app.use(this.path.search, searchRouter);
 		this.app.use(this.path.uploads, uploadsRouter);
 		this.app.use(this.path.user, userRouter);
+		this.app.use(this.path.error, errorRouter);
 	}
 
 	socket() {
