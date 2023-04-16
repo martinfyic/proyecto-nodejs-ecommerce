@@ -1,4 +1,4 @@
-import { orderService } from '../service/index.js';
+import { orderService, cartService } from '../service/index.js';
 import { logger } from '../config/winston/winston.js';
 
 export const getAllOrders = async (req, res) => {
@@ -32,6 +32,8 @@ export const createOrder = async (req, res) => {
 				cart: newOrder.cart,
 			});
 		}
+
+		await cartService.deleteCart(idCart);
 
 		return res.status(201).json({
 			status: 'Ok',
