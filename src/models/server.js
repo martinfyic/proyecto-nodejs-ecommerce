@@ -11,6 +11,7 @@ import {
 	errorRouter,
 	orderRouter,
 	productRouter,
+	productViewsRouter,
 	searchRouter,
 	uploadsRouter,
 	userRouter,
@@ -31,6 +32,7 @@ export class ServerApp {
 			categories: '/api/categories',
 			orders: '/api/orders',
 			products: '/api/products',
+			productsViews: '/products',
 			search: '/api/search',
 			uploads: '/api/uploads',
 			user: '/api/users',
@@ -72,6 +74,7 @@ export class ServerApp {
 		this.app.use(this.path.categories, categoryRouter);
 		this.app.use(this.path.orders, orderRouter);
 		this.app.use(this.path.products, productRouter);
+		this.app.use(this.path.productsViews, productViewsRouter);
 		this.app.use(this.path.search, searchRouter);
 		this.app.use(this.path.uploads, uploadsRouter);
 		this.app.use(this.path.user, userRouter);
