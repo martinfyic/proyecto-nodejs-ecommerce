@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Sign Up</title>
+		<link
+			rel="icon"
+			href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+			crossorigin="anonymous"
+		/>
+	</head>
+	<body class="container">
+		<div class="mt-5 mx-5">
+			<div class="p-3 mx-5">
+				<h1>Sign Up</h1>
+				<hr />
+				<form
+					action=""
+					class="d-grid mt-3 mx-5"
+				>
+					<input
+						id="nameInput"
+						type="text"
+						name="name"
+						class="form-control mb-3"
+						placeholder="Name"
+					/>
+					<input
+						id="emailInput"
+						type="text"
+						name="email"
+						class="form-control mb-3"
+						placeholder="Email"
+					/>
+					<input
+						id="passwordInput"
+						type="text"
+						name="password"
+						class="form-control mb-3"
+						placeholder="Password"
+					/>
+					<button
+						type="submit"
+						class="btn btn-dark mt-3 px-5 mx-5"
+					>
+						Sign Up
+					</button>
+					<a
+						class="btn btn-outline-primary mt-3 px-5 mx-5"
+						href="./index.html"
+						>I have an account</a
+					>
+				</form>
+				<div id="divError"></div>
+			</div>
+		</div>
+
+		<script
+			src="https://accounts.google.com/gsi/client"
+			async
+			defer
+		></script>
+		<script src="./js/register.js"></script>
+	</body>
+</html>
