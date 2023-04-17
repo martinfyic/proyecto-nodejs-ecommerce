@@ -11,14 +11,23 @@ export const getProducts = async (req, res) => {
 			since
 		);
 
-		// --- Para enviar json con la info de productos y consumir la api desde el front y no ejs ---
-		// return res.json({
-		// 	status: 'Ok',
-		// 	message: 'Productos Activos',
-		// 	method: req.method,
-		// 	totalProducts,
-		// 	products,
-		// });
+		return res.json({
+			status: 'Ok',
+			message: 'Productos Activos',
+			method: req.method,
+			totalProducts,
+			products,
+		});
+	} catch (error) {
+		logger.error(`===> ⚠️ Error in productController/getProducts: ${error}`);
+	}
+};
+
+export const getViewsProducts = async (req, res) => {
+	try {
+		const { limit = 10, since = 0 } = req.query;
+
+		const [products] = await productService.getAllProducts(limit, since);
 
 		res.render('views/products', {
 			title: 'Products 🤑 ',

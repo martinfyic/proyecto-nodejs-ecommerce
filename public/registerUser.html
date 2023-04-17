@@ -10,7 +10,7 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1.0"
 		/>
-		<title>Signin</title>
+		<title>Sign Up</title>
 		<link
 			rel="icon"
 			href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>"
@@ -23,65 +23,48 @@
 		/>
 	</head>
 	<body class="container">
-		<div class="row mt-5">
-			<div class="col-sm-6 p-3">
-				<h1>Google Signin</h1>
-				<hr />
-				<div
-					id="g_id_onload"
-					data-client_id="600199556623-a7en2qf8trmdjt2g7dholksehstolls4.apps.googleusercontent.com"
-					data-auto_prompt="false"
-					data-callback="handleCredentialResponse"
-				></div>
-				<div
-					class="g_id_signin"
-					data-type="standard"
-					data-size="large"
-					data-theme="outline"
-					data-text="sign_in_with"
-					data-shape="rectangular"
-					data-logo_alignment="left"
-				></div>
-				<button
-					class="btn btn-outline-danger mt-3 px-5"
-					id="google_singout"
-				>
-					Signout
-				</button>
-			</div>
-			<div class="col-sm-6 p-3">
-				<h1>Custom Signin</h1>
+		<div class="mt-5 mx-5">
+			<div class="p-3 mx-5">
+				<h1>Sign Up</h1>
 				<hr />
 				<form
 					action=""
-					class="d-grid"
+					class="d-grid mt-3 mx-5"
 				>
+					<input
+						id="nameInput"
+						type="text"
+						name="name"
+						class="form-control mb-3"
+						placeholder="Name"
+					/>
 					<input
 						id="emailInput"
 						type="text"
 						name="email"
-						class="form-control mb-2"
+						class="form-control mb-3"
 						placeholder="Email"
 					/>
 					<input
 						id="passwordInput"
 						type="text"
 						name="password"
-						class="form-control mb-2"
+						class="form-control mb-3"
 						placeholder="Password"
 					/>
 					<button
 						type="submit"
-						class="btn btn-dark mt-3 px-5"
+						class="btn btn-dark mt-3 px-5 mx-5"
 					>
-						Signin
+						Sign Up
 					</button>
 					<a
-						class="btn btn-outline-primary mt-3 px-5"
-						href="./registerUser.html"
-						>I dont have an account</a
+						class="btn btn-outline-primary mt-3 px-5 mx-5"
+						href="./index.html"
+						>I have an account</a
 					>
 				</form>
+				<div id="divError"></div>
 			</div>
 		</div>
 
@@ -90,6 +73,6 @@
 			async
 			defer
 		></script>
-		<script src="./js/auth.js"></script>
+		<script src="./js/register.js"></script>
 	</body>
 </html>
