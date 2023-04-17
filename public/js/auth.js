@@ -26,7 +26,7 @@ customForm.addEventListener('submit', event => {
 				return console.error(message);
 			}
 			localStorage.setItem('token', token);
-			window.location = 'api/products';
+			window.location = 'products';
 		})
 		.catch(console.warn);
 
@@ -48,7 +48,7 @@ function handleCredentialResponse(response) {
 		.then(resp => resp.json())
 		.then(({ token }) => {
 			localStorage.setItem('token', token);
-			window.location = 'api/products';
+			window.location = 'products';
 		})
 		.catch(console.warn);
 }
