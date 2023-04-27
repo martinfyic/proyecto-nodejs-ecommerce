@@ -23,21 +23,6 @@ export const getProducts = async (req, res) => {
 	}
 };
 
-export const getViewsProducts = async (req, res) => {
-	try {
-		const { limit = 10, since = 0 } = req.query;
-
-		const [products] = await productService.getAllProducts(limit, since);
-
-		res.render('views/products', {
-			title: 'Products 🤑 ',
-			products,
-		});
-	} catch (error) {
-		logger.error(`===> ⚠️ Error in productController/getProducts: ${error}`);
-	}
-};
-
 export const getProductById = async (req = request, res = response) => {
 	try {
 		const { id } = req.params;
